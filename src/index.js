@@ -8,10 +8,12 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { rootReducer } from './redux/root-reducer';
 import thunk from 'redux-thunk';
 
+// Create store
 let store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk),
+    // Settings for redux browser extension
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );

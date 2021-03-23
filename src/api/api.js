@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// settings for axios
 const instance = axios.create({
   baseURL: 'http://37.230.116.58/api/draft/',
   headers: {
@@ -10,20 +11,26 @@ const instance = axios.create({
   },
 });
 
+// API for home page
 export const homeAPI = {
+  // This method get photos for home page
   fetchImages() {
     return instance.get('/photos').then((response) => response.data);
   },
 };
 
-export const fileUpload = (photoFiles) => {
-  const formData = new FormData();
-  formData.append('image', photoFiles);
-  return instance
-    .post('/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then((response) => response.data);
+// API for myPhotos page
+export const myPhotosAPI = {
+  // This method send photos to server
+  fileUpload(photoFiles) {
+    const formData = new FormData();
+    formData.append('image', photoFiles);
+    return instance
+      .post('/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => response.data);
+  },
 };
