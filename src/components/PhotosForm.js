@@ -8,11 +8,12 @@ export const PhotosForm = () => {
     let files = e.target.files; // accessing file
     // let url = URL.createObjectURL(file);
 
-    setUrls(
-      [...files].map((file) => {
+    setUrls([
+      ...urls,
+      ...[...files].map((file) => {
         return URL.createObjectURL(file);
       }),
-    );
+    ]);
     // if (file) {
     //   const reader = new FileReader();
     //   reader.onload = ({ target: { result } }) => {
