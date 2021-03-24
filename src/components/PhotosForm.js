@@ -2,18 +2,25 @@ import { useState } from 'react';
 
 export const PhotosForm = () => {
   const [preview, setPreview] = useState('');
+  let [urls, setUrls] = useState([]);
 
   const handleChange = (e) => {
-    const file = e.target.files[0]; // accessing file
+    let files = e.target.files; // accessing file
+    // let url = URL.createObjectURL(file);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = ({ target: { result } }) => {
-        setPreview(result);
-      };
+    setUrls(
+      [...files].map((file) => {
+        return URL.createObjectURL(file);
+      }),
+    );
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onload = ({ target: { result } }) => {
+    //     setPreview(result);
+    //   };
 
-      reader.readAsDataURL(file); // you can read image file as DataURL like this.
-    }
+    //   reader.readAsDataURL(file); // you can read image file as DataURL like this.
+    // }
   };
 
   return (
@@ -48,7 +55,9 @@ export const PhotosForm = () => {
       </div>
       <div>
         <h2>Photos</h2>
-        <img width="200" height="200" src={preview} alt="" />
+        {urls.map((url) => {
+          return <img width="200" height="200" src={url} alt="" />;
+        })}
       </div>
 
       <button type="submit" className="btn btn-primary">
