@@ -1,31 +1,32 @@
 import { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { uploadMyImages } from '../redux/actions';
 
-export const PhotosForm = () => {
-  const [preview, setPreview] = useState('');
-  let [urls, setUrls] = useState([]);
+const PhotosForm = ({ uploadMyImages }) => {
+  let [previews, setPreviews] = useState([]);
+  let [files, setFiles] = useState([]);
 
   const handleChange = (e) => {
-    let files = e.target.files; // accessing file
-    // let url = URL.createObjectURL(file);
+    let currentFiles = [...e.target.files]; // accessing file
 
-    setUrls([
-      ...urls,
-      ...[...files].map((file) => {
+    setFiles([...files, ...currentFiles]);
+
+    setPreviews([
+      ...previews,
+      ...currentFiles.map((file) => {
         return URL.createObjectURL(file);
       }),
     ]);
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onload = ({ target: { result } }) => {
-    //     setPreview(result);
-    //   };
+  };
 
-    //   reader.readAsDataURL(file); // you can read image file as DataURL like this.
-    // }
+  const submithandle = (e) => {
+    e.preventDefault();
+    uploadMyImages(files);
+    setPreviews([]);
   };
 
   return (
-    <form>
+    <form onSubmit={submithandle}>
       <div className="form-group">
         <label htmlFor="exampleInputEmail1">Material name</label>
         <input
@@ -56,8 +57,8 @@ export const PhotosForm = () => {
       </div>
       <div>
         <h2>Photos</h2>
-        {urls.map((url) => {
-          return <img width="200" height="200" src={url} alt="" />;
+        {previews.map((url) => {
+          return <img width="200" height="200" src={url} alt="" key={url} />;
         })}
       </div>
 
@@ -67,3 +68,5 @@ export const PhotosForm = () => {
     </form>
   );
 };
+
+export default connect(null, { uploadMyImages })(PhotosForm);

@@ -25,6 +25,7 @@ export const myPhotosAPI = {
   fileUpload(photoFiles) {
     const formData = new FormData();
     formData.append('image', photoFiles);
+
     return instance
       .post('/upload', formData, {
         headers: {

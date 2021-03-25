@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import './index.css';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import { applyMiddleware, compose, createStore } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import { rootReducer } from './redux/root-reducer';
 import thunk from 'redux-thunk';
 
@@ -13,7 +13,7 @@ let store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk),
-    // Settings for redux browser extension
+
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );
@@ -24,7 +24,7 @@ const app = (
   </Provider>
 );
 
-ReactDOM.render(app, document.getElementById('root'));
+render(app, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

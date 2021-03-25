@@ -1,5 +1,5 @@
-import { FETCH_ALL_IMAGES } from './types';
-import { homeAPI } from './../api/api';
+import { FETCH_ALL_IMAGES, UPLOAD_MY_IMAGES } from './types';
+import { homeAPI, myPhotosAPI } from './../api/api';
 
 // This thunk get photos from server for home page
 export const fetchAllImages = () => {
@@ -10,6 +10,19 @@ export const fetchAllImages = () => {
     if (response) {
       dispatch({
         type: FETCH_ALL_IMAGES,
+        payload: response,
+      });
+    }
+  };
+};
+
+export const uploadMyImages = (files) => {
+  return async (dispatch) => {
+    let response = await myPhotosAPI.fileUpload(files);
+
+    if (response) {
+      dispatch({
+        type: UPLOAD_MY_IMAGES,
         payload: response,
       });
     }
