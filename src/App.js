@@ -4,9 +4,9 @@ import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import { MyPhotos } from './pages/MyPhotos';
 
-const App = (props) => {
+const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Navbar />
       <div className="container pt-4">
         <Switch>

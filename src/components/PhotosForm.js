@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { uploadMyImages } from '../redux/actions';
+import { connect } from 'react-redux';
+import { addPost } from '../redux/actions';
+import addFileIco from './../img/file-plus.svg';
 
-const PhotosForm = ({ uploadMyImages }) => {
+const PhotosForm = ({ addPost }) => {
   let [previews, setPreviews] = useState([]);
-  let [files, setFiles] = useState([]);
+  let [photos, setPhotos] = useState([]);
 
   const handleChange = (e) => {
-    let currentFiles = [...e.target.files]; // accessing file
+    let currentPhotos = [...e.target.files]; // accessing file
 
-    setFiles([...files, ...currentFiles]);
+    window.test = e.target.files;
+    setPhotos([...photos, ...currentPhotos]);
 
     setPreviews([
       ...previews,
-      ...currentFiles.map((file) => {
+      ...currentPhotos.map((file) => {
         return URL.createObjectURL(file);
       }),
     ]);
@@ -21,8 +23,17 @@ const PhotosForm = ({ uploadMyImages }) => {
 
   const submithandle = (e) => {
     e.preventDefault();
-    uploadMyImages(files);
+    addPost({
+      title: 'Test',
+      author: 'Mike',
+      category: 'IT',
+      comment: 'comments sadfsa',
+      files: {
+        photos: photos,
+      },
+    });
     setPreviews([]);
+    setPhotos([]);
   };
 
   return (
@@ -46,12 +57,18 @@ const PhotosForm = ({ uploadMyImages }) => {
         ></textarea>
       </div>
       <div className="form-group">
-        <label htmlFor="exampleFormControlFile1">Example file input</label>
+        <h4>
+          <label htmlFor="exampleFormControlFile1" className="custom-file-input-label">
+            <img src={addFileIco} alt="" width="30" height="30" />
+          </label>
+        </h4>
+
         <input
           type="file"
-          className="form-control-file"
+          className="form-control-file custom-file-input"
           id="exampleFormControlFile1"
           onChange={handleChange}
+          value=""
           multiple
         />
       </div>
@@ -69,4 +86,4 @@ const PhotosForm = ({ uploadMyImages }) => {
   );
 };
 
-export default connect(null, { uploadMyImages })(PhotosForm);
+export default connect(null, { addPost })(PhotosForm);

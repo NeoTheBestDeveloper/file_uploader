@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
-import { homeReducer } from './home-reducer';
-import { myPhotoReducer } from './myPhoto-reducer';
+import { postsReducer } from './postsReducer';
 
 //create root reducer
 export const rootReducer = combineReducers({
-  home: homeReducer,
-  myPhoto: myPhotoReducer,
+  posts: postsReducer,
 });

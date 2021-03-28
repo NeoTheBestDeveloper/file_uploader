@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
-import { Cards } from '../components/Cards';
+import { AllPosts } from '../components/AllPosts';
 import XX from './../img/XX.jpg';
 import XIX from './../img/XIX.jpg';
 import MiddleAges from './../img/MiddleAges.jpg';
 import Antique from './../img/Antique.jpg';
 
 export const Home = () => {
-  const cards = [
+  const posts = [
     {
       id: 1,
       title: 'Card 1',
@@ -44,7 +44,7 @@ export const Home = () => {
   return (
     <Fragment>
       <h1>Popular</h1>
-      <Cards cards={cards} />
+      <AllPosts posts={posts} />
     </Fragment>
   );
 };
