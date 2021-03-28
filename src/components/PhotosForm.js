@@ -6,19 +6,26 @@ import addFileIco from './../img/file-plus.svg';
 const PhotosForm = ({ addPost }) => {
   let [previews, setPreviews] = useState([]);
   let [photos, setPhotos] = useState([]);
+  let [name, setName] = useState('');
+  let [text, setText] = useState('');
 
   const handleChange = (e) => {
-    let currentPhotos = [...e.target.files]; // accessing file
+    if (e.target.files) {
+      let currentPhotos = [...e.target.files]; // accessing file
 
-    window.test = e.target.files;
-    setPhotos([...photos, ...currentPhotos]);
+      window.test = e.target.files;
+      setPhotos([...photos, ...currentPhotos]);
 
-    setPreviews([
-      ...previews,
-      ...currentPhotos.map((file) => {
-        return URL.createObjectURL(file);
-      }),
-    ]);
+      setPreviews([
+        ...previews,
+        ...currentPhotos.map((file) => {
+          return URL.createObjectURL(file);
+        }),
+      ]);
+    } else {
+      console.log(e.target.name);
+      setName(e.target.name);
+    }
   };
 
   const submithandle = (e) => {
@@ -46,6 +53,8 @@ const PhotosForm = ({ addPost }) => {
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
           placeholder="Enter name..."
+          onChange={handleChange}
+          value={name}
         />
       </div>
       <div className="form-group">

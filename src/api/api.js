@@ -24,14 +24,34 @@ export const myPhotosAPI = {
   // This method send photos to server
   fileUpload(photoFiles) {
     const formData = new FormData();
-    formData.append('image', photoFiles);
+    formData.append('title', photoFiles.title);
+    formData.append('category', photoFiles.category);
+    formData.append('comment', photoFiles.comment);
+    for (let i = 0; i < photoFiles.files.photos.length; i++) {
+      formData.append(photoFiles.files.photos[i].name, photoFiles.files.photos[i]);
+    }
+
+    // КАСТЫЛЬ
+    window.test = formData;
+    console.log(photoFiles);
+    // КАСТЫЛЬ
 
     return instance
-      .post('/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      .post(
+        '/upload',
+        {
+          title: photoFiles.title,
+          category: photoFiles.category,
+          comment: photoFiles.comment,
+          files: photoFiles.files,
         },
-      })
+
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      )
       .then((response) => response.data);
   },
 };
